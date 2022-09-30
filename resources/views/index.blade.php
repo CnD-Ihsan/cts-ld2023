@@ -58,21 +58,25 @@
         </css-doodle>
 
         <style>
-           html, body { 
-            height: 100%; 
-            margin: 0; 
-            overflow: hidden;
-            overflow: clip; 
-            contain: content;
-            }
-            body {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #000; 
-        }
+            html, body { 
+                height: 100%; 
+                margin: 0; 
+                overflow: hidden;
+                overflow: clip; 
+                contain: content;
+                }
 
-         
+            body {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: #000; 
+            }
+
+            img {
+                max-width: 250px;
+                max-height: 180px;
+            }
 
             table {
                 border-spacing: 0;
@@ -102,13 +106,13 @@
                 left: 28%;
                 position: absolute;
                 z-index: 99;
-                width: 900px;
-                height: 900px;
+                width: 800px;
+                height: 800px;
             }
 
             .gq{
-                width:280px;
-                height:270px;
+                width:100%;
+                height:100%;
                 padding-top: 1.5%;
             }
 
@@ -132,10 +136,9 @@
                 /* box-shadow: 0 4px 7px 0 rgb(211, 247, 248), 0 6px 15px 0 rgb(189, 243, 245); */
                 /* animation: rotate 5s cubic-bezier(0.54, 0.13, 0.3, 0.87); */
                 animation: gold_rotate 7s cubic-bezier(0.54, 0.13, 0.03, 1);
-            }
-
-            gifts {
-                
+                opacity: 0;
+                transition: opacity 1s;
+                transition-delay: 5s;
             }
 
             @keyframes rotate {
@@ -281,22 +284,25 @@
                 <tbody>
                     <tr>
                         <td> 
-                            <div class="anim_wrap"><img id="1" src="img/gq-sepia.gif" alt="whut" class="gq add_gold"></div>
+                            <div class="anim_wrap">
+                                <img id="img1" src="img/gq-sepia.gif" alt="whut" class="gq add_gold">
+                                {{-- <img id="gift1" src="img/gq-sepia.gif" alt="whut" class="gq add_gold"> --}}
+                            </div>
                         </td>
-                        <td><img id="2" src="img/gq.gif" alt="whut" class="gq"></td>
-                        <td><img id="3" src="img/gq.gif" alt="whut" class="gq"></td>
+                        <td><img id="img2" src="img/gq.gif" alt="whut" class="gq"></td>
+                        <td><img id="img3" src="img/gq.gif" alt="whut" class="gq"></td>
                     </tr>
                     <tr>
-                        <td><img id="4" src="img/gq.gif" alt="whut" class="gq"></td>
-                        <td><img id="5" src="img/gq.gif" alt="whut" class="gq"></td>
+                        <td><img id="img4" src="img/gq.gif" alt="whut" class="gq"></td>
+                        <td><img id="img5" src="img/gq.gif" alt="whut" class="gq"></td>
                         {{-- <td><div class="gold_wrap"><img src="img/gq-sepia.gif" alt="whut" class="gq gold"></div></td> --}}
-                        <td><div class="anim_wrap"><img id="6" src="img/gq-sepia.gif" alt="whut" class="gq add_gold"></div></td>
+                        <td><div class="anim_wrap"><img id="img6" src="img/gq-sepia.gif" alt="whut" class="gq add_gold"></div></td>
 
                     </tr>
                     <tr>
-                        <td><img id="7" src="img/gq.gif" alt="whut" class="gq"></td>
-                        <td><img id="8" src="img/gq.gif" alt="whut" class="gq"></td>
-                        <td><img id="0" src="img/gq.gif" alt="whut" class="gq"></td>
+                        <td><img id="img7" src="img/gq.gif" alt="whut" class="gq"></td>
+                        <td><img id="img8" src="img/gq.gif" alt="whut" class="gq"></td>
+                        <td><img id="img0" src="img/gq.gif" alt="whut" class="gq"></td>
                     </tr>
                 </tbody>
             </table>
@@ -381,14 +387,6 @@
         // var e = document.getElementById(i);
         var e = document.getElementsByClassName("gq");
         if (e[i].src.match("img/gq.gif")) {
-            for(let j = 0; j < 10; j++){
-                setTimeout(() => {
-                    
-                this.gq[i].style.opacity = this.gq[i].style.opacity - 0.1;
-                    
-                }, 250);
-            }
-
             e[i].src = "img/gifts/2.jpg"; 
         }
         else if(e[i].src.match("img/gq-sepia.gif")){

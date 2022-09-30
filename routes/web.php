@@ -17,3 +17,10 @@ Route::get('/', function () {
     return view('index');
 });
 
+Route::group(([
+    'controller' => Controller::class,
+]), function(){
+    //Index Page Route
+    Route::get('/','index')->name('index');
+    Route::get('/index','index')->name('index');
+});
