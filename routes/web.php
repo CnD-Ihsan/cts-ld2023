@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Controller;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,5 +23,6 @@ Route::group(([
 ]), function(){
     //Index Page Route
     Route::get('/','index')->name('index');
-    Route::get('/index','index')->name('index');
+    Route::get('/list','list')->name('list');
+    Route::get('/reset','reset')->name('reset');
 });

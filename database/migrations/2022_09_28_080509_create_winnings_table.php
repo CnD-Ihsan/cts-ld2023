@@ -15,8 +15,7 @@ return new class extends Migration
     {
         Schema::create('winnings', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
-            $table->text('employee')->nullable();
+            $table->text('user')->nullable();
             $table->text('prize')->nullable();
         });
     }

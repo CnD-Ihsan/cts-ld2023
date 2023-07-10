@@ -15,11 +15,10 @@ return new class extends Migration
     {
         Schema::create('gifts', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
             $table->text('name')->nullable();
             $table->text('img')->nullable();
-            $table->text('quantity')->nullable();
-            $table->text('type')->nullable();
+            $table->string('type')->nullable();
+            $table->string('winner')->nullable();
         });
     }
 
