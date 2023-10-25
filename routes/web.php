@@ -14,10 +14,6 @@ use App\Http\Controllers\Controller;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
-
 Route::group(([
     'controller' => Controller::class,
 ]), function(){
