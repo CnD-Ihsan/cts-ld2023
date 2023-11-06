@@ -19,6 +19,7 @@ Route::group(([
 ]), function(){
     //Index Page Route
     Route::get('/','index')->name('index');
+    Route::get('/redraw/{prize_id}','redraw')->name('redraw');
     Route::get('/list','list')->name('list');
     Route::get('/reset','reset')->name('reset');
 });

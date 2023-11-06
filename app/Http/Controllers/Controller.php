@@ -7,7 +7,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 use App\Models\User;
-use App\Models\Gift;
+use App\Models\Prize;
 use App\Models\Winning;
 use DB;
 
@@ -16,103 +16,74 @@ class Controller extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     public function index(){
-
-        $total_gq = DB::table('gifts')
-                        ->select('type')
-                        ->where('type', 'grand')
+        $prize = DB::table('prizes')
+                        // ->inRandomOrder()
                         ->whereNull('winner')
-                        ->count(); 
-         
-        
-        if($total_gq <= 10){
+                        ->first();
 
-            $gifts = Gift::where('type', 'standard')
-                ->whereNull('winner')
-                ->inRandomOrder()
-                ->limit(7)
-                ->get();  
-            $gq = Gift::where('type', 'grand')
-                ->whereNull('winner')
-                ->inRandomOrder()
-                ->limit(2)
-                ->get();   
-            $gifts = $gifts->merge($gq);
-
-        }else if($total_gq < 1){
-            $gifts = Gift::where('type', 'standard')
-                ->whereNull('winner')
-                ->inRandomOrder()
-                ->limit(9)
-                ->get();  
-        }else{
-            $gifts = Gift::where('type', 'standard')
-                ->whereNull('winner')
-                ->inRandomOrder()
-                ->limit(8)
-                ->get();  
-
-            $gq = Gift::where('type', 'grand')
-                ->whereNull('winner')
-                ->inRandomOrder()
-                ->limit(1)
-                ->get();   
-            $gifts = $gifts->merge($gq);
-        }
-
-        $users = User::inRandomOrder()
+        $user = User::inRandomOrder()
                     ->whereNull('prize')
-                    ->limit(9)
-                    ->get(); 
+                    ->first(); 
+
+        // $testWinner = $testNumber[array_rand($testNumber)];
         
-        if(!$gifts->first()){
+        if(!$prize){
             return redirect()->route('list');
         }
 
-        if($gifts->count() == $users->count()){
-            foreach ($users as $key => $user) {
-                $win = Winning::create([
-                    'user' => $user->id,
-                    'prize' => $gifts[$key]->id,
-                ]);
-                
-                $saveUser = User::find($user->id);
-                $savePrize = Gift::find($gifts[$key]->id);
+        $saveUser = User::find($user->id);
+        $savePrize = Prize::find($prize->id);
 
-                $saveUser->prize = $gifts[$key]->id;
-                $savePrize->winner = $user->id;
+        $saveUser->prize = $prize->id;
+        $savePrize->winner = $user->id;
 
-                $saveUser->save();
-                $savePrize->save();
-            }
-            //dd($total_gq);
-            return view('index', compact("gifts", "users"));
-        }else{
-            return "Number of Users and Gifts mismatch";
-        }
+        $saveUser->save();
+        $savePrize->save();
+
+        $win = Winning::create([
+            'user' => $user->id,
+            'prize' => $prize->id,
+        ]);
+
+        return view('index', compact("prize", "user"));
+    }
+
+    public function redraw($prize_id){
+        $win = Winning::where('prize', $prize_id)->delete();
+        $prize = Prize::find($prize_id);
+        $user = User::find($prize->winner);
+
+        $prize->winner = null;
+        $prize->save();
+        $user->prize = null;
+        $user->save();
+
+        return redirect()->route("index", ['prize_id' => $prize_id]);
     }
 
     public function list(){
-        $winnings = Winning::all()->sortBy('user');
-
-        if($winnings->first()){
-            foreach ($winnings as $key => $win) {
-                $list[$key]['user'] = $win->user;
-                $list[$key]['prize'] = Gift::find($win->prize)->name; 
+        $winnings = Winning::all();
+        try{
+            if($winnings->first()){
+                foreach ($winnings as $key => $win) {
+                    $list[$key]['user'] = User::find($win->user)->number;
+                    $list[$key]['prize'] = Prize::find($win->prize)->name; 
+                }
+            }else{
+                $list[0]['user'] = "Empty";
+                $list[0]['prize'] = "Empty"; 
             }
-            return view('list', compact("list"));
-        }else{
-            $list[0]['user'] = "Empty";
-            $list[0]['prize'] = "Empty"; 
-            return view('list', compact("list"));
+        }catch(Exception $e){
+            dd($e);
         }
-        
+        return view('list', compact("list"));
     }
 
     public function reset(){
 
         $winnings = DB::table('winnings')->truncate();
         $users = DB::table('users')->update(['prize' => null]);
-        $prizes = DB::table('gifts')->update(['winner' => null]);
+        $prizes = DB::table('prizes')->update(['winner' => null]);
         //dd($prizes);
 
         return redirect()->route('index');
