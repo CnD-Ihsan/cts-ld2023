@@ -450,10 +450,10 @@
 
     </head>
     <body class="antialiased">
-        <div id="curtainsWrapper">
+        {{-- <div id="curtainsWrapper">
             <div class="curtain curtain-left"></div>
             <div class="curtain curtain-right"></div>
-        </div><!--curtainsWrapper -->
+        </div><!--curtainsWrapper --> --}}
         <div id="confetti"></div>
         <div id="starshine">
             <div class="template shine"></div>
@@ -866,85 +866,6 @@
     var tweenSecs = 1.3; //default 1.3
     var delaySecs = 0.25; //default 0.25
     const animArr = [];
-    
-    const raffleTimeline = new TimelineMax();
-    raffleTimeline.add(
-        TweenMax.to("#nodeA0, #nodeA1", 0.02, { //default was 0.9
-            y: "+=400",
-            delay: 0, //Math.random()
-            ease: Power3.easeInOut,
-            onComplete: swapNodesA
-        })
-    );
-    raffleTimeline.add(
-        TweenMax.to("#nodeB0, #nodeB1", 0.02, { //default was 0.9
-            y: "+=400",
-            delay: 0, //Math.random()
-            ease: Power3.easeInOut,
-            onComplete: swapNodesB
-        })
-    );
-    raffleTimeline.add(
-        TweenMax.to("#nodeC0, #nodeC1", 0.02, { //default was 0.9
-            y: "+=400",
-            delay: 0, //Math.random()
-            ease: Power3.easeInOut,
-            onComplete: swapNodesC
-        })
-    );
-    raffleTimeline.add(
-        TweenMax.to("#nodeD0, #nodeD1", 0.02, { //default was 0.9
-            y: "+=400",
-            delay: 0, //Math.random()
-            ease: Power3.easeInOut,
-            onComplete: swapNodesD
-        })
-    );
-    raffleTimeline.add(
-        TweenMax.to("#nodeE0, #nodeE1", 0.02, { //default was 0.9
-            y: "+=400",
-            delay: 0, //Math.random()
-            ease: Power3.easeInOut,
-            onComplete: swapNodesE
-        })
-    );
-
-    // const resultTimeline = new TimelineMax();
-    // resultTimeline.add(
-    //     TweenMax.to("#nodeA0, #nodeA1", 0.02, { //default was 0.9
-    //         y: "+=400",
-    //         delay: 0, //Math.random()
-    //         ease: Power3.easeInOut,
-    //     })
-    // );
-    // resultTimeline.add(
-    //     TweenMax.to("#nodeB0, #nodeB1", 0.02, { //default was 0.9
-    //         y: "+=400",
-    //         delay: 0.5, //Math.random()
-    //         ease: Power3.easeInOut,
-    //     })
-    // );
-    // resultTimeline.add(
-    //     TweenMax.to("#nodeC0, #nodeC1", 0.02, { //default was 0.9
-    //         y: "+=400",
-    //         delay: 1, //Math.random()
-    //         ease: Power3.easeInOut,
-    //     })
-    // );
-    // resultTimeline.add(
-    //     TweenMax.to("#nodeD0, #nodeD1", 0.02, { //default was 0.9
-    //         y: "+=400",
-    //         delay: 1.5, //Math.random()
-    //         ease: Power3.easeInOut,
-    //     })
-    // );
-    // resultTimeline.add(
-    //     TweenMax.to("#nodeE0, #nodeE1", 0.02, { //default was 0.9
-    //         y: "+=400",
-    //         delay: 2, //Math.random()
-    //         ease: Power3.easeInOut,
-    //     })
-    // );
         
     const resultAnimArr = [];
     var animA, animB, animC, animD, animE;
@@ -1069,6 +990,7 @@
         if(tweenSecs > 1){
             tweenSecs = 0.02;
             delaySecs = 0;
+            rollnum_masq_audio.play();
         }else {
             tweenSecs = 1.3;
             delaySecs = 0.25;
@@ -1157,6 +1079,8 @@
         sequence.play();
     }
 
+    const stopnum_masq_audio = new Audio("/sound/stopnum_masq.mp3");
+    const rollnum_masq_audio = new Audio("/sound/rollnum_masq.mp3");
     function startAnimationsInManualSequence() {
         const delayConst = 0; //alt 0.25
         const animationConst = 0.02; //alt 3.2
@@ -1168,24 +1092,34 @@
         console.log(arrJackpot[2]);  
         console.log(arrJackpot[3]);
         console.log(arrJackpot[4]); 
+        stopnum_masq_audio.currentTime = 0;
+        stopnum_masq_audio.play();
         animA.kill();
     
         setTimeout(() => {
-            nB0.textContent = arrJackpot[1];
+            nB0.textContent = arrJackpot[1]; 
+            stopnum_masq_audio.currentTime = 0;
+            stopnum_masq_audio.play();
             animB.kill();
         }, 2000);
         setTimeout(() => { 
-            nC0.textContent = arrJackpot[2];
+            nC0.textContent = arrJackpot[2]; 
+            stopnum_masq_audio.currentTime = 0;
+            stopnum_masq_audio.play();
             animC.kill();
-        }, 3500);
+        }, 4000);
         setTimeout(() => {
-            nD0.textContent = arrJackpot[3];
+            nD0.textContent = arrJackpot[3]; 
+            stopnum_masq_audio.currentTime = 0;
+            stopnum_masq_audio.play();
             animD.kill();
-        }, 5000);
+        }, 6000);
         setTimeout(() => {
-            nE0.textContent = arrJackpot[4];
+            nE0.textContent = arrJackpot[4]; 
+            stopnum_masq_audio.currentTime = 0;
+            stopnum_masq_audio.play();
             animE.kill();
-        }, 6500);
+        }, 8000);
     }
 
     document.addEventListener("keydown", function(event) {
@@ -1558,7 +1492,7 @@ $(document).ready(function() {
         // $(window).trigger('resize');
         
         e.preventDefault();
-        // $(this).off();
+        $(this).off();
 
         //this.hidden = true;
         // startConfetti();
