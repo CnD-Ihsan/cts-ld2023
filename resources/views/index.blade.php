@@ -707,6 +707,7 @@
     var b3 = document.getElementById("b3");
 
     const audio = new Audio("/sound/spin.mp3");
+    const spin_c_audio = new Audio("/sound/spin-c.mp3");
     const confetti_audio = new Audio("/sound/award.mp3");
     const flash_audio = new Audio("/sound/flash.mp3");
     const normal_audio = new Audio("/sound/thud.mp3");
@@ -1001,64 +1002,6 @@
             animation.kill(); // Kill the animation to ensure it completes
             });
         });
-    }
-
-    // Function to start animations in sequence
-    function startAnimationsInSequence() {
-        const sequence = new TimelineMax();
-        return;
-        sequence.staggerTo(".box", 1, { x: 100, opacity: 0, ease: Power2.easeOut }, 0.2);
-        sequence.to("#nodeA0, #nodeA1", 0.02, { //default was 0.9
-            y: "+=400",
-            delay:  0,
-            ease: Power3.easeInOut,
-            // onComplete: () => {
-            //     nA0.textContent = arrJackpot[0];
-            //     console.log(nA0.textContent);
-            //     TweenMax.set("#nodeA0, #nodeA1", { y: "-=400"});
-            // }
-        })
-        sequence.to("#nodeB0, #nodeB1", 0.02, { //default was 0.9
-            y: "+=400",
-            delay:  0.5 * 1,
-            ease: Power3.easeInOut,
-            // onComplete: () => {
-            //     nB0.textContent = arrJackpot[1];
-            //     console.log(nB0.textContent);
-            //     TweenMax.set("#nodeB0, #nodeB1", { y: "-=400"});
-            // }
-        })
-        sequence.to("#nodeC0, #nodeC1", 0.02, { //default was 0.9
-            y: "+=400",
-            delay:  0.5 * 2,
-            ease: Power3.easeInOut,
-            // onComplete: () => {
-            //     nC0.textContent = arrJackpot[2];
-            //     console.log(nC0.textContent);
-            //     TweenMax.set("#nodeC0, #nodeC1", { y: "-=400"});
-            // }
-        })
-        sequence.to("#nodeD0, #nodeD1", 0.02, { //default was 0.9
-            y: "+=400",
-            delay:  0.5 * 3,
-            ease: Power3.easeInOut,
-            // onComplete: () => {
-            //     nD0.textContent = arrJackpot[3];
-            //     console.log(nD0.textContent);
-            //     TweenMax.set("#nodeD0, #nodeD1", { y: "-=400"});
-            // }
-        })
-        sequence.to("#nodeE0, #nodeE1", 0.02, { //default was 0.9
-            y: "+=400",
-            delay:  0.5 * 4,
-            ease: Power3.easeInOut,
-            // onComplete: () => {
-            //     nE0.textContent = arrJackpot[4];
-            //     console.log(nE0.textContent);
-            //     TweenMax.set("#nodeE0, #nodeE1", { y: "-=400"});
-            // }
-        })
-        sequence.play();
     }
 
     const stopnum_masq_audio = new Audio("/sound/stopnum_masq.mp3");

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 10, 2023 at 07:57 AM
+-- Generation Time: Nov 10, 2023 at 10:23 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -81,16 +81,16 @@ CREATE TABLE `prizes` (
 --
 
 INSERT INTO `prizes` (`id`, `name`, `img`, `type`, `winner`) VALUES
-(1, 'Apple iPad Air (5th generation), 2022, Wifi (256GB) (1Year Warranty)', '1', 'grand', '69'),
-(2, 'Zero Massage Chair (Ubliss)', '2', 'grand', NULL),
-(3, 'SONY Playstation 5 Disc Version', '3', 'grand', NULL),
-(4, 'Dyson V8 Slim Fluffy+ Vacuum', '4', 'grand', NULL),
+(1, 'Apple iPad Air (5th generation), 2022, Wifi (256GB) (1Year Warranty)', '1', 'grand', '57'),
+(2, 'Ubliss Zero Massage Chair ', '2', 'grand', NULL),
+(3, 'SONY Playstation 5 (Disc Version)', '3', 'grand', NULL),
+(4, 'Dyson v8 Slim Fluffy Vacuum', '4', 'grand', NULL),
 (5, 'MH Gift Card', '5', 'grand', NULL),
 (6, 'Habib Voucher', '6', 'grand', NULL),
-(7, 'SenQ Cash Voucher', '7', 'grand', NULL),
+(7, 'Top Kinabalu Voucher', '7', 'grand', NULL),
 (8, 'DJI Pocket 2', '8', 'grand', NULL),
-(9, 'Apple Watch SE 2023 40mm ', '9', 'grand', NULL),
-(10, 'KIV', '10', 'grand', NULL);
+(9, 'Apple Watch SE (2023)', '9', 'grand', NULL),
+(10, 'Habib Voucher', '10', 'grand', NULL);
 
 -- --------------------------------------------------------
 
@@ -165,7 +165,7 @@ INSERT INTO `users` (`id`, `number`, `prize`) VALUES
 (54, '23054', NULL),
 (55, '23055', NULL),
 (56, '23056', NULL),
-(57, '23057', NULL),
+(57, '23057', '1'),
 (58, '23058', NULL),
 (59, '23059', NULL),
 (60, '23060', NULL),
@@ -177,7 +177,7 @@ INSERT INTO `users` (`id`, `number`, `prize`) VALUES
 (66, '23066', NULL),
 (67, '23067', NULL),
 (68, '23068', NULL),
-(69, '23069', '1'),
+(69, '23069', NULL),
 (70, '23070', NULL),
 (71, '23071', NULL),
 (72, '23072', NULL),
@@ -214,7 +214,7 @@ CREATE TABLE `winnings` (
 --
 
 INSERT INTO `winnings` (`id`, `user`, `prize`) VALUES
-(1, '69', '1');
+(9, '57', '1');
 
 --
 -- Indexes for dumped tables
@@ -284,7 +284,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `winnings`
 --
 ALTER TABLE `winnings`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

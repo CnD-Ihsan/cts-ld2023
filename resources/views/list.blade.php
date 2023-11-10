@@ -20,7 +20,7 @@
                 height: 100%;
                 margin: 0;
                 overflow: hidden;
-                overflow: clip;
+                /* overflow: clip; */
                 contain: content;
                 cursor: url('img/mask-cur.png'), grabbing;
             }
