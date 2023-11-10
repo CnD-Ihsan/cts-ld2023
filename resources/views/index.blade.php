@@ -20,6 +20,7 @@
         <style>
             html {
                 margin: 0;
+                overflow: hidden;
             }
 
             body {
@@ -389,62 +390,47 @@
                     0 0 40px #ffdd1b, 0 0 45px #ffdd1b, 0 0 55px #ffdd1b, 0 0 80px #ffdd1b;
                 }
             }
+
+            @keyframes orangeNeon {
+                from {
+                    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #ff9900,
+                    0 0 70px #ff9900, 0 0 80px #ff9900, 0 0 100px #ff9900, 0 0 150px #ff9900;
+                }
+                to {
+                    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #ff9900,
+                    0 0 35px #ff9900, 0 0 40px #ff9900, 0 0 50px #ff9900, 0 0 75px #ff9900;
+                }
+            }
             
             * { box-sizing: border-box; }
             
-            .group,
-            .reel {
-                display: inline-block;
-                color: #000000;
+            #backdrop {
+                position: fixed;
+                right: 0;
+                bottom: 0;
+                min-width: 100%; 
+                min-height: 100%;
             }
 
-            .group {
-                display: flex;
-                justify-content: space-between;
-                padding: 2.0rem 0;
-                border-radius: 3.0rem;
+            .luckyGift{
+                position: absolute;
+                bottom: 6%;
+                left: 34%;
+                z-index: 1;
             }
 
-            .reel {
-                font-size: 7rem;
-                position: relative;
-                float: left;
-                width: 18%;
-                height: 10rem;
-                padding: 0 1.0rem;
-                overflow: hidden;
-                text-align: center;
-                background: #ffffff;
-                border-radius: 1.0rem;
-                box-shadow: 0 .2rem .7rem rgba(0, 0, 0, .3) inset, 0 0 .1rem rgba(0, 0, 0, .2) inset;
+            .luckyGift img{
+                height: 400px;
+                width: 400px;
+            }
 
-                .reel-holder {
-                    position: relative;
-                    top: -4.0rem;
-                    text-align: center;
-                }
-
-                .reel-door {
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    width: 100%;
-                    height: 100%;
-                    font-size: 4.0rem;
-                    font-weight: bold;
-                    background: #fab821;
-                }
-
-                p {
-                    height: 6.0rem;
-                    margin-top: 1.0rem;
-                    margin-bottom: 0;
-                    font-size: 4.8rem;
-                    font-weight: bold;
-                }
+            .luckyNum{
+                position: absolute;
+                left: 22%;
+                bottom: 44%;
+                z-index: 1;
+                text-shadow: #6e4602 0px 0px 10px;
+                /* animation: yellowNeon 1.5s ease-in-out infinite alternate; */
             }
         </style>
 
@@ -461,9 +447,13 @@
         <canvas id="bg"></div></canvas>
         {{-- <div id="vignette"></div> --}}
 
-        <div class="tablewrapper">
+        <video autoplay muted loop id="backdrop">
+            <source src="video/backdrop.mp4" type="video/mp4">
+            Mystique Masquerade Backdropd
+        </video>
+        <div class="tablewrapper" hidden>
             <div class="row justify-content-center">
-                <div class="neonText">Masquerade<br>Night</div>
+                {{-- <div class="neonText">Masquerade<br>Night</div> --}}
                 {{-- <div class="outrun glow">CTS Lucky Draw 2023</div>    --}}
                     <div class="col-sm-2 mb-4 card bg-transparent border-0">
                         <div class="card-body animated-box in">
@@ -478,8 +468,102 @@
                     <input id="winner" name="winner" type="hidden" value="{{ $user->number }}"/>
                     <input id="prizeId" name="prizeId" type="hidden" value="{{ $prize->id }}"/>
             </div>
-            <div class="row justify-content-center">
-                <div class="stage">
+            {{-- <div class="row justify-content-center">
+                <svg id="demo" xmlns="http://www.w3.org/2000/svg" width="300" height="300" viewBox="0 0 300 300">
+                    <defs>
+                        <lineargradient id="theGradient" gradientUnits="userSpaceOnUse" x1="150" y1="0" x2="150" y2="300">
+                        <stop offset="0%" stop-color="#000000"/>
+                        <stop offset="25%" stop-color="#fff"/>
+                        <stop offset="75%" stop-color="#fff"/>
+                        <stop offset="100%" stop-color="#000000"/>
+                        </lineargradient>
+                    <mask id="theMask">
+                    <rect x="0" y="0" width="400" height="400" fill="url(#theGradient)" />  
+                    </mask>
+                    </defs> 
+                    
+                    <g mask="url(#theMask)"> 
+                    <text id="nodeA0" transform="translate(150 250)" text-anchor="middle" font-size="240" fill="#fff">9</text>
+                    <text id="nodeA1" transform="translate(150 -150)" text-anchor="middle" font-size="240" fill="#fff">9</text>
+                    </g>
+                </svg>
+                <svg id="demo" xmlns="http://www.w3.org/2000/svg" width="300" height="300" viewBox="0 0 300 300">
+                    <defs>
+                        <lineargradient id="theGradient" gradientUnits="userSpaceOnUse" x1="150" y1="0" x2="150" y2="300">
+                        <stop offset="0%" stop-color="#000000"/>
+                        <stop offset="25%" stop-color="#fff"/>
+                        <stop offset="75%" stop-color="#fff"/>
+                        <stop offset="100%" stop-color="#000000"/>
+                        </lineargradient>
+                    <mask id="theMask">
+                    <rect x="0" y="0" width="400" height="400" fill="url(#theGradient)" />  
+                    </mask>
+                    </defs> 
+                    
+                    <g mask="url(#theMask)"> 
+                    <text id="nodeB0" transform="translate(150 250)" text-anchor="middle" font-size="240" fill="#fff">9</text>
+                    <text id="nodeB1" transform="translate(150 -150)" text-anchor="middle" font-size="240" fill="#fff">9</text>
+                    </g>
+                </svg>
+                <svg id="demo" xmlns="http://www.w3.org/2000/svg" width="300" height="300" viewBox="0 0 300 300">
+                    <defs>
+                        <lineargradient id="theGradient" gradientUnits="userSpaceOnUse" x1="150" y1="0" x2="150" y2="300">
+                        <stop offset="0%" stop-color="#000000"/>
+                        <stop offset="25%" stop-color="#fff"/>
+                        <stop offset="75%" stop-color="#fff"/>
+                        <stop offset="100%" stop-color="#000000"/>
+                        </lineargradient>
+                    <mask id="theMask">
+                    <rect x="0" y="0" width="400" height="400" fill="url(#theGradient)" />  
+                    </mask>
+                    </defs> 
+                    
+                    <g mask="url(#theMask)"> 
+                    <text id="nodeC0" transform="translate(150 250)" text-anchor="middle" font-size="240" fill="#fff">9</text>
+                    <text id="nodeC1" transform="translate(150 -150)" text-anchor="middle" font-size="240" fill="#fff">9</text>
+                    </g>
+                </svg>
+                <svg id="demo" xmlns="http://www.w3.org/2000/svg" width="300" height="300" viewBox="0 0 300 300">
+                    <defs>
+                        <lineargradient id="theGradient" gradientUnits="userSpaceOnUse" x1="150" y1="0" x2="150" y2="300">
+                        <stop offset="0%" stop-color="#000000"/>
+                        <stop offset="25%" stop-color="#fff"/>
+                        <stop offset="75%" stop-color="#fff"/>
+                        <stop offset="100%" stop-color="#000000"/>
+                        </lineargradient>
+                    <mask id="theMask">
+                    <rect x="0" y="0" width="400" height="400" fill="url(#theGradient)" />  
+                    </mask>
+                    </defs> 
+                    
+                    <g mask="url(#theMask)"> 
+                    <text id="nodeD0" transform="translate(150 250)" text-anchor="middle" font-size="240" fill="#fff">9</text>
+                    <text id="nodeD1" transform="translate(150 -150)" text-anchor="middle" font-size="240" fill="#fff">9</text>
+                    </g>
+                </svg>
+                <svg id="demo" xmlns="http://www.w3.org/2000/svg" width="300" height="300" viewBox="0 0 300 300">
+                    <defs>
+                        <lineargradient id="theGradient" gradientUnits="userSpaceOnUse" x1="150" y1="0" x2="150" y2="300">
+                        <stop offset="0%" stop-color="#000000"/>
+                        <stop offset="25%" stop-color="#fff"/>
+                        <stop offset="75%" stop-color="#fff"/>
+                        <stop offset="100%" stop-color="#000000"/>
+                        </lineargradient>
+                    <mask id="theMask">
+                    <rect x="0" y="0" width="400" height="400" fill="url(#theGradient)" />  
+                    </mask>
+                    </defs> 
+                    
+                    <g mask="url(#theMask)"> 
+                    <text id="nodeE0" transform="translate(150 250)" text-anchor="middle" font-size="240" fill="#fff">9</text>
+                    <text id="nodeE1" transform="translate(150 -150)" text-anchor="middle" font-size="240" fill="#fff">9</text>
+                    </g>
+                </svg>
+            </div> --}}
+        </div>
+
+            <div class="luckyNum">
+                <div class="row justify-content-center">
                     <svg id="demo" xmlns="http://www.w3.org/2000/svg" width="300" height="300" viewBox="0 0 300 300">
                         <defs>
                             <lineargradient id="theGradient" gradientUnits="userSpaceOnUse" x1="150" y1="0" x2="150" y2="300">
@@ -498,8 +582,6 @@
                         <text id="nodeA1" transform="translate(150 -150)" text-anchor="middle" font-size="240" fill="#fff">9</text>
                         </g>
                     </svg>
-                </div>
-                <div class="stage">
                     <svg id="demo" xmlns="http://www.w3.org/2000/svg" width="300" height="300" viewBox="0 0 300 300">
                         <defs>
                             <lineargradient id="theGradient" gradientUnits="userSpaceOnUse" x1="150" y1="0" x2="150" y2="300">
@@ -518,8 +600,6 @@
                         <text id="nodeB1" transform="translate(150 -150)" text-anchor="middle" font-size="240" fill="#fff">9</text>
                         </g>
                     </svg>
-                </div>
-                <div class="stage">
                     <svg id="demo" xmlns="http://www.w3.org/2000/svg" width="300" height="300" viewBox="0 0 300 300">
                         <defs>
                             <lineargradient id="theGradient" gradientUnits="userSpaceOnUse" x1="150" y1="0" x2="150" y2="300">
@@ -538,8 +618,6 @@
                         <text id="nodeC1" transform="translate(150 -150)" text-anchor="middle" font-size="240" fill="#fff">9</text>
                         </g>
                     </svg>
-                </div>
-                <div class="stage">
                     <svg id="demo" xmlns="http://www.w3.org/2000/svg" width="300" height="300" viewBox="0 0 300 300">
                         <defs>
                             <lineargradient id="theGradient" gradientUnits="userSpaceOnUse" x1="150" y1="0" x2="150" y2="300">
@@ -558,8 +636,6 @@
                         <text id="nodeD1" transform="translate(150 -150)" text-anchor="middle" font-size="240" fill="#fff">9</text>
                         </g>
                     </svg>
-                </div>
-                <div class="stage">
                     <svg id="demo" xmlns="http://www.w3.org/2000/svg" width="300" height="300" viewBox="0 0 300 300">
                         <defs>
                             <lineargradient id="theGradient" gradientUnits="userSpaceOnUse" x1="150" y1="0" x2="150" y2="300">
@@ -580,106 +656,20 @@
                     </svg>
                 </div>
             </div>
-            <div class="row justify-content-center" style="z-index:99" hidden>
-                <div class="col-sm-2 mb-4 card bg-transparent border-0">
-                    <div class="card-body animated-box in">
-                        <div class="card-image"><img id="placeholder0" src="img/4.png" alt="whut" class="gq mx-auto {{ $prize->type == 'grand' ? 'add_gold grand' : '' }}"></div>
-                        <div class="card-text mt-2">
-                            {{-- <p id="slotNum1" class="slotNum1" style="font-size:7rem">0</p> --}}
-                            {{-- <div id="numVal0" class="" style="font-size: 4rem;" disabled hidden>{{ $user->id }}</div>
-                            <div id="numGif0" class=""><img src="img/prize/number1.gif" class="numGif" alt="num"> </div> --}}
+            <div class="luckyGift">
+                <div class="row justify-content-center">
+                    {{-- <div class="neonText">Masquerade<br>Night</div> --}}
+                    <div class="col-sm-2 mb-4 card bg-transparent border-0">
+                        <div class="card-body">
+                            <div class="card-image"><img id="placeholder0" src="img/prizes/{{ $prize->img }}.png" alt="whut" class=""></div>
+                            <div class="card-text mt-2"></div>
                         </div>
                     </div>
-                </div>
-                <div class="col-sm-2 mb-4 card bg-transparent border-0">
-                    <div class="card-body animated-box in">
-                        {{-- <div class="card-image"><img id="placeholder0" src="img/5.png" alt="whut" class="gq mx-auto {{ $prize->type == 'grand' ? 'add_gold grand' : '' }}"></div> --}}
-                        <div class="card-text mt-2">
-                            <p id="slotNum" class="slotNum" style="font-size:7rem">0</p>
-                            {{-- <div id="numVal0" class="" style="font-size: 4rem;" disabled hidden>{{ $user->id }}</div>
-                            <div id="numGif0" class=""><img src="img/prize/number1.gif" class="numGif" alt="num"> </div> --}}
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-2 mb-4 card bg-transparent border-0">
-                    <div class="card-body animated-box in">
-                        {{-- <div class="card-image"><img id="placeholder0" src="img/5.png" alt="whut" class="gq mx-auto {{ $prize->type == 'grand' ? 'add_gold grand' : '' }}"></div> --}}
-                        <div class="card-text mt-2">
-                            <p id="slotNum" class="slotNum" style="font-size:7rem">0</p>
-                            {{-- <div id="numVal0" class="" style="font-size: 4rem;" disabled hidden>{{ $user->id }}</div>
-                            <div id="numGif0" class=""><img src="img/prize/number1.gif" class="numGif" alt="num"> </div> --}}
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-2 mb-4 card bg-transparent border-0">
-                    <div class="card-body animated-box in">
-                        {{-- <div class="card-image"><img id="placeholder0" src="img/5.png" alt="whut" class="gq mx-auto {{ $prize->type == 'grand' ? 'add_gold grand' : '' }}"></div> --}}
-                        <div class="card-text mt-2">
-                            <p id="slotNum" class="slotNum" style="font-size:7rem">0</p>
-                            {{-- <div id="numVal0" class="" style="font-size: 4rem;" disabled hidden>{{ $user->id }}</div>
-                            <div id="numGif0" class=""><img src="img/prize/number1.gif" class="numGif" alt="num"> </div> --}}
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-2 mb-4 card bg-transparent border-0">
-                    <div class="card-body animated-box in">
-                        {{-- <div class="card-image"><img id="placeholder0" src="img/5.png" alt="whut" class="gq mx-auto {{ $prize->type == 'grand' ? 'add_gold grand' : '' }}"></div> --}}
-                        <div class="card-text mt-2">
-                            <p id="slotNum" class="slotNum" style="font-size:7rem">0</p>
-                            {{-- <div id="numVal0" class="" style="font-size: 4rem;" disabled hidden>{{ $user->id }}</div>
-                            <div id="numGif0" class=""><img src="img/prize/number1.gif" class="numGif" alt="num"> </div> --}}
-                        </div>
-                    </div>
+                    <input id="img0" name="img0" type="hidden" value="{{ $prize->img }}"/>
+                    <input id="winner" name="winner" type="hidden" value="{{ $user->number }}"/>
+                    <input id="prizeId" name="prizeId" type="hidden" value="{{ $prize->id }}"/>
                 </div>
             </div>
-        </div>
-          <svg width="0" height="0">
-            <filter id="filter">
-            <feTurbulence type="fractalNoise" baseFrequency=".01" numOctaves="10" id="fractalNoise"/>
-            <feDisplacementMap id="displacementMap" in="SourceGraphic" scale="120" />
-            </filter>
-            <animate
-              xlink:href="#displacementMap"
-              id="animclouds1"
-              begin="0; animclouds2.end"
-              attributeName="scale"
-              from="50"
-              to="180"
-              dur="3s"
-              fill="freeze"
-              />
-              <animate
-                xlink:href="#displacementMap"
-                id="animclouds2"
-                begin="animclouds1.end"
-                attributeName="scale"
-                from="180"
-                to="50"
-                dur="3s"
-                fill="freeze"
-                />
-                <animate
-                  xlink:href="#fractalNoise"
-                  id="animclouds3"
-                  begin="0;animclouds4.end"
-                  attributeName="baseFrequency"
-                  from="0.03"
-                  to="0.01"
-                  dur="30s"
-                  fill="freeze"
-                  />
-                  <animate
-                    xlink:href="#fractalNoise"
-                    id="animclouds4"
-                    begin="animclouds3.end"
-                    attributeName="baseFrequency"
-                    from="0.01"
-                    to="0.03"
-                    dur="30s"
-                    fill="freeze"
-                    />
-                  </svg>
-
     </body>
 </html>
 
@@ -999,14 +989,6 @@
         setTimeout(function(){
             startAnimationsInManualSequence();
         },5000);
-
-        return;
-
-        let variousTiming = 1;
-        animArr.forEach(animation => {
-            animation.duration(2); // Update animation duration to 2 seconds
-            animation.delay(animation.delay() + 0.3); // Add 0.3 seconds to the existing delay
-        });
     }
 
     // Function to stop all animations and ensure they complete
@@ -1085,37 +1067,42 @@
         const delayConst = 0; //alt 0.25
         const animationConst = 0.02; //alt 3.2
         
-        nA0.textContent = arrJackpot[0];
-
         console.log(arrJackpot[0]);
         console.log(arrJackpot[1]);
         console.log(arrJackpot[2]);  
         console.log(arrJackpot[3]);
         console.log(arrJackpot[4]); 
+
+        nA0.textContent = arrJackpot[0];
+        nA1.textContent = arrJackpot[0];
         stopnum_masq_audio.currentTime = 0;
         stopnum_masq_audio.play();
         animA.kill();
     
         setTimeout(() => {
             nB0.textContent = arrJackpot[1]; 
+            nB1.textContent = arrJackpot[1]; 
             stopnum_masq_audio.currentTime = 0;
             stopnum_masq_audio.play();
             animB.kill();
         }, 2000);
         setTimeout(() => { 
             nC0.textContent = arrJackpot[2]; 
+            nC1.textContent = arrJackpot[2]; 
             stopnum_masq_audio.currentTime = 0;
             stopnum_masq_audio.play();
             animC.kill();
         }, 4000);
         setTimeout(() => {
             nD0.textContent = arrJackpot[3]; 
+            nD1.textContent = arrJackpot[3]; 
             stopnum_masq_audio.currentTime = 0;
             stopnum_masq_audio.play();
             animD.kill();
         }, 6000);
         setTimeout(() => {
             nE0.textContent = arrJackpot[4]; 
+            nE1.textContent = arrJackpot[4]; 
             stopnum_masq_audio.currentTime = 0;
             stopnum_masq_audio.play();
             animE.kill();

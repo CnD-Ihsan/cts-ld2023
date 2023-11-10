@@ -25,8 +25,15 @@ class Controller extends BaseController
                     ->whereNull('prize')
                     ->first(); 
 
-        // $testWinner = $testNumber[array_rand($testNumber)];
-        
+        // $winner = [];
+        // // for($i = 0; $i < 100; $i++){
+        // //     $u = User::inRandomOrder()
+        // //             ->whereNull('prize')
+        // //             ->first(); 
+        // //     $winner[$i] = $u->number;
+        // // }
+        // // dd(array_count_values($winner));
+
         if(!$prize){
             return redirect()->route('list');
         }
